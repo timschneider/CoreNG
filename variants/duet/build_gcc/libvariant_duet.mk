@@ -40,6 +40,7 @@ CMSIS_ARM_PATH=$(CMSIS_ROOT_PATH)/CMSIS/Include
 CMSIS_ATMEL_PATH=$(CMSIS_ROOT_PATH)/Device/ATMEL
 #CMSIS_CHIP_PATH=$(CMSIS_ROOT_PATH)/Device/ATMEL/$(CHIP_SERIE)
 
+ASF_PATH = ../../../asf
 ARDUINO_PATH = ../../../cores/arduino
 VARIANT_BASE_PATH = ../../../variants
 VARIANT_PATH = ../../../variants/$(VARIANT)
@@ -64,6 +65,28 @@ INCLUDES += -I$(VARIANT_BASE_PATH)
 INCLUDES += -I$(VARIANT_PATH)
 INCLUDES += -I$(CMSIS_ARM_PATH)
 INCLUDES += -I$(CMSIS_ATMEL_PATH)
+INCLUDES += -I$(ASF_PATH)
+INCLUDES += -I$(ASF_PATH)/sam/utils
+INCLUDES += -I$(ASF_PATH)/sam/utils/header_files
+INCLUDES += -I$(ASF_PATH)/sam/utils/preprocessor
+INCLUDES += -I$(ASF_PATH)/sam/drivers
+INCLUDES += -I$(ASF_PATH)/sam/drivers/dmac
+INCLUDES += -I$(ASF_PATH)/sam/drivers/efc
+INCLUDES += -I$(ASF_PATH)/sam/drivers/hsmci
+INCLUDES += -I$(ASF_PATH)/sam/drivers/pio
+INCLUDES += -I$(ASF_PATH)/sam/drivers/pmc
+INCLUDES += -I$(ASF_PATH)/sam/drivers/spi
+INCLUDES += -I$(ASF_PATH)/sam/drivers/usart
+INCLUDES += -I$(ASF_PATH)/common/utils
+INCLUDES += -I$(ASF_PATH)/common/services/clock
+INCLUDES += -I$(ASF_PATH)/common/services/ioport
+INCLUDES += -I$(ASF_PATH)/common/services/sleepmgr
+INCLUDES += -I$(ASF_PATH)/common/services/usb
+INCLUDES += -I$(ASF_PATH)/common/services/usb/udc
+INCLUDES += -I$(ASF_PATH)/common/services/usb/class/cdc
+INCLUDES += -I$(ASF_PATH)/common/services/usb/class/cdc/device
+INCLUDES += -I$(ASF_PATH)/thirdparty/CMSIS/Include
+INCLUDES += -I$(ASF_PATH)/sam/utils/cmsis/sam3x/include
 
 # Standard Duet libraries (more of them may be incorporated into the Arduino core)
 INCLUDES += -I$(LIBRARY_PATH)/EMAC
@@ -85,6 +108,13 @@ endif
 #-------------------------------------------------------------------------------
 
 include $(TOOLCHAIN).mk
+CFLAGS += -c -mcpu=cortex-m3 -mthumb -ffunction-sections -fdata-sections -nostdlib -Wdouble-promotion -fsingle-precision-constant "-Wa,-ahl=$*.s"
+CFLAGS += -std=gnu99
+CFLAGS += -DUDD_ENABLE -DUDD_NO_SLEEP_MGR
+
+CPPFLAGS += -c -mcpu=cortex-m3 -mthumb -ffunction-sections -fdata-sections -fno-threadsafe-statics -fno-rtti -fno-exceptions -nostdlib -Wdouble-promotion -fsingle-precision-constant "-Wa,-ahl=$*.s"
+CPPFLAGS += -std=gnu++17
+CPPFLAGS += -DUDD_ENABLE -DUDD_NO_SLEEP_MGR
 
 #-------------------------------------------------------------------------------
 ifdef DEBUG
