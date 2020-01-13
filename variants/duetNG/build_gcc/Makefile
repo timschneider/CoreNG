@@ -22,21 +22,21 @@ SUBMAKE_OPTIONS=--no-builtin-rules --no-builtin-variables --no-print-directory
 # Rules
 #-------------------------------------------------------------------------------
 
-all: duet
+all: duetNG
 
-.PHONY: duet
-duet:
+.PHONY: duetNG
+duetNG:
 	@echo ------------------------------------------------------------------------------------
-	@echo --- Making variant duet
-#	@$(MAKE) DEBUG=1 $(SUBMAKE_OPTIONS) -f libvariant_duet.mk
-	@$(MAKE) $(SUBMAKE_OPTIONS) -f libvariant_duet.mk
+	@echo --- Making variant duetNG
+#	@$(MAKE) DEBUG=1 $(SUBMAKE_OPTIONS) -f libvariant_duetNG.mk
+	@$(MAKE) $(SUBMAKE_OPTIONS) -f libvariant_duetNG.mk
 	@echo ------------------------------------------------------------------------------------
 
 .PHONY: clean
 clean:
 	@echo ------------------------------------------------------------------------------------
-	@echo --- Cleaning variant arduino_due_x
-#	@$(MAKE) DEBUG=1 $(SUBMAKE_OPTIONS) -f libvariant_duet.mk $@
-	@$(MAKE) $(SUBMAKE_OPTIONS) -f libvariant_duet.mk $@
+	@echo --- Cleaning variant duetNG
+#	@$(MAKE) DEBUG=1 $(SUBMAKE_OPTIONS) -f libvariant_duetNG.mk $@
+	@$(MAKE) $(SUBMAKE_OPTIONS) -f libvariant_duetNG.mk $@
 	@echo ------------------------------------------------------------------------------------
 
