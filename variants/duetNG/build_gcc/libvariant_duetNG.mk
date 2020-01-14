@@ -21,7 +21,7 @@
 
 CHIP=__SAM4E8E__
 VARIANT=duetNG
-LIBNAME=libvariant_$(VARIANT)
+LIBNAME=CoreNG
 TOOLCHAIN=gcc
 
 #-------------------------------------------------------------------------------
@@ -29,8 +29,8 @@ TOOLCHAIN=gcc
 #-------------------------------------------------------------------------------
 
 # Output directories
-OUTPUT_BIN = ../../..
-OUTPUT_LIB=lib$(VARIANT).a
+OUTPUT_BIN = ../../../SAM4E8E
+OUTPUT_LIB=lib$(LIBNAME).a
 
 # Libraries
 PROJECT_BASE_PATH = ..
@@ -281,7 +281,7 @@ INCLUDES += $(sort $(dir $(INCLUDES_TEMP)))
 
 vpath %.cpp $(PROJECT_BASE_PATH) $(CPP_SRC_PATHS)
 vpath %.hpp $(CPP_SRC_PATHS)
-vpath %.c $(C_SRC_PATHS)
+vpath %.c $(PROJECT_BASE_PATH) $(C_SRC_PATHS)
 vpath %.h $(C_SRC_PATHS) $(CPP_SRC_PATHS)
 
 #-------------------------------------------------------------------------------
@@ -326,7 +326,7 @@ create_output:
 #	@echo *$(A_SRC)
 #	@echo -------------------------
 
-	-@mkdir $(OUTPUT_PATH) 1>NUL 2>&1
+	-@mkdir -p $(OUTPUT_PATH) 1>NUL 2>&1
 	@echo ------------------------------------------------------------------------------------
 
 $(addprefix $(OUTPUT_PATH)/,$(C_OBJ)): $(OUTPUT_PATH)/%.o: %.c
@@ -341,6 +341,7 @@ $(addprefix $(OUTPUT_PATH)/,$(A_OBJ)): $(OUTPUT_PATH)/%.o: %.s
 	@"$(AS)" -c $(ASFLAGS) $< -o $@
 
 $(OUTPUT_LIB): $(addprefix $(OUTPUT_PATH)/, $(C_OBJ)) $(addprefix $(OUTPUT_PATH)/, $(CPP_OBJ)) $(addprefix $(OUTPUT_PATH)/, $(A_OBJ))
+	@mkdir -p $(OUTPUT_BIN) 1>NUL 2>&1
 	@"$(AR)" -v -r "$(OUTPUT_BIN)/$@" $^
 	@"$(NM)" "$(OUTPUT_BIN)/$@" > "$(OUTPUT_BIN)/$@.txt"
 
