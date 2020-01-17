@@ -79,4 +79,4 @@ CPPFLAGS += $(OPTIMIZATION) $(INCLUDES) -D$(CHIP)
 # ---------------------------------------------------------------------------------------
 # ASM Flags
 
-ASFLAGS = -mcpu=cortex-m3 -mthumb -Wall -g $(OPTIMIZATION) $(INCLUDES)
+ASFLAGS = -mcpu=cortex-m4 -mthumb -Wall -g $(OPTIMIZATION) $(INCLUDES)

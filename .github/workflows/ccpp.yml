@@ -11,20 +11,30 @@ jobs:
     - uses: actions/checkout@v1
     - name: setup cross build environment
       run: |
-        echo "Downloading ARM Cross Compiler"
+        echo "Downloading ARM Cross Compiler v9-2019q4"
         wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2019q4/RC2.1/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 >/dev/null 2>&1
         echo "Extracting ARM Cross Compiler"
         tar -xf gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2
         echo "Set Environment Variables"
         export ARM_GCC_TOOLCHAIN="${PWD}/gcc-arm-none-eabi-9-2019-q4-major/bin"
-        export PATH="$ARM_GCC_TOOLCHAIN:$PATH"
         echo "::set-env name=ARM_GCC_TOOLCHAIN::$ARM_GCC_TOOLCHAIN"
-    - name: make
+        echo "ARM_GCC_TOOLCHAIN: $ARM_GCC_TOOLCHAIN"
+    - name: make duet
+      working-directory: ./variants/duet/build_gcc 
+      run: |
+        echo "ARM Cross Compiler: $ARM_GCC_TOOLCHAIN"
+        make
+    - name: upload SAM3X8E-libCoreNG libraries
+      uses: actions/upload-artifact@v1
+      with:
+        name: SAM3X8E-libCoreNG
+        path: SAM3X8E/libCoreNG.a
+    - name: make duetNG
       working-directory: ./variants/duetNG/build_gcc 
       run: |
         echo "ARM Cross Compiler: $ARM_GCC_TOOLCHAIN"
         make
-    - name: upload libraries
+    - name: upload SAM4E8E-libCoreNG libraries
       uses: actions/upload-artifact@v1
       with:
         name: SAM4E8E-libCoreNG
