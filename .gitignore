@@ -55,3 +55,9 @@ Temporary Items
 /SAME70/
 /SAME70_DUET3V03
 /SAME70XPLD/
+
+# temp files
+*.s
+*.o
+*.a
+*.a.txt
